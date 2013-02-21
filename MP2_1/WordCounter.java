@@ -51,7 +51,7 @@ public class WordCounter {
 			while (values.hasNext()) {
 				count += values.next().get();
 			}
-			output.collect(key, new Text("-" + count));
+			output.collect(key, new Text("" + count));
 		}
 
 	}
@@ -59,8 +59,11 @@ public class WordCounter {
 	public static void main(String[] args) {
 		JobClient client = new JobClient();
 		JobConf conf = new JobConf(WordCounter.class);
-        conf.setJobName("word_counter");
-        conf.setMapOutputKeyClass(Text.class);
+                conf.setJobName("word_counter");
+        	conf.set("mapred.textoutputformat.separator","-");
+
+
+                conf.setMapOutputKeyClass(Text.class);
 		conf.setMapOutputValueClass(IntWritable.class);
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(IntWritable.class);
